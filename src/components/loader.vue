@@ -1,10 +1,10 @@
 <template>
   <div class="spinner">
-    <div class="rect1"></div>
-    <div class="rect2"></div>
-    <div class="rect3"></div>
-    <div class="rect4"></div>
-    <div class="rect5"></div>
+    <span class="rect1"></span>
+    <span class="rect2"></span>
+    <span class="rect3"></span>
+    <span class="rect4"></span>
+    <span class="rect5"></span>
   </div>
 </template>
 
@@ -20,17 +20,18 @@ export default {
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
 .spinner {
-  margin: 100px auto;
-  width: 50px;
+  margin: 0 auto;
+  width: auto;
   height: 40px;
   text-align: center;
   font-size: 10px;
 }
 
-.spinner > div {
+.spinner > span {
   background-color: #333;
   height: 100%;
-  width: 6px;
+  width: 10px;
+  margin: 0 3px;
   display: inline-block;
   
   -webkit-animation: sk-stretchdelay 1.2s infinite ease-in-out;

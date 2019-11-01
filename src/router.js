@@ -6,6 +6,7 @@ import SignIn from './views/SignIn.vue'
 import EditLog from './views/EditLog.vue'
 import UserList from './views/UserList.vue'
 import Links from './views/Links.vue'
+import Test from './components/test.vue'
 
 Vue.use(Router)
 
@@ -37,6 +38,11 @@ export default new Router({
       path:'/links',
       name: 'links',
       component: Links
+    },
+    {
+      path: '/test',
+      name: 'test',
+      component: Test
     }
   ]
 })

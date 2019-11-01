@@ -1,9 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="isSignIned">
-      <myheader title='ユーザー管理ツール'/>
-      <sidebar/>
-    </div>
+    <headermenu v-if="isSignIned" />
     <transition mode="out-in">
       <router-view/>
     </transition>
@@ -11,14 +8,12 @@
 </template>
 
 <script>
-import MyHeader from './components/MyHeader'
-import SideBar from './components/SideBar'
+import HeaderMenu from './components/HeaderMenu'
 
 export default {
   name: 'App',
   components: {
-    myheader: MyHeader,
-    sidebar: SideBar
+    headermenu: HeaderMenu
   },
   data(){
     return {
@@ -29,7 +24,7 @@ export default {
   methods: {
     fetchData(){
       var isSignIn = this.$route.params.SignIn;
-      if(isSignIn == true || isSignIn == false){
+      if(isSignIn == true || isSignIn == false){//except undefined
         this.isSignIned = this.$route.params.SignIn;
       }
       
@@ -57,7 +52,7 @@ export default {
 .v-enter-active, .v-leave-active 
   transition: opacity .1s;
 
-.v-enter, .v-leave-to 
+.v-enter, .v-leave-to
   opacity: 0;
 
 *
@@ -73,6 +68,5 @@ export default {
   text-align: center;
   color: #2c3e50;
   padding-top: 50px;
-  padding-left: 180px;
   background-color: #FFF;
 </style>
