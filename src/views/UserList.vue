@@ -1,22 +1,22 @@
 <template>
-  <div class="userlist">
+  <div class="userlist container">
     <section v-if="loading">
       <br/>
       <p>Loading...</p>
       <loader></loader>
     </section>
-    <section v-else class="container is-fluid">
+    <section v-else>
       <input class="input" type="text" v-model="srchWrd" placeholder="検索語句を入力">
       <div class="table-container" style="margin: 20px 0">
         <table class="table is-bordered is-hoverable">
           <thead>
             <tr>
-              <th v-for="hdr in res_hdr" @click="sorting(hdr)" :key="hdr.Master_ID">{{ hdr }}</th>
+              <th v-for="hdr in res_hdr" @click="sorting(hdr)" :key="hdr.id">{{ hdr }}</th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="list in filteredUsers" :key="list.Master_ID" @click="editUser(list.Master_ID)">
-              <td v-for="item in list" :key="item.Master_ID">
+            <tr v-for="list in filteredUsers" :key="list.id" @click="editUser(list.id)">
+              <td v-for="item in list" :key="item.id">
                 {{ item }}
               </td>
             </tr>
@@ -51,8 +51,8 @@ export default {
 
       for(var i in this.res_bdy){
         var user = this.res_bdy[i];
-        if(user.Windows_ID.indexOf(this.srchWrd) !== -1 ||
-           user.User_Name.toLowerCase().indexOf(this.srchWrd) !== -1){
+        if(user.windows_id.indexOf(this.srchWrd) !== -1 ||
+           user.name.toLowerCase().indexOf(this.srchWrd) !== -1){
              lists.push(user);
         }
       }
@@ -66,13 +66,16 @@ export default {
       })
     },
     editUser(id){
-      alert(id);
+      this.$router.push({ name: 'user', params: { id: id } })
     }
   },
   mounted(){
     axios
-      .get("http://lejnet/ISNet/UMT/db.asp")
+      .get("http://lejnet/ISNet/UMT/db.asp", {
+          params:{req:'read'}
+        })
       .then(response => {
+        console.log(response.data);
           this.res_hdr = response.data.header;
           this.res_bdy = response.data.body;
           this.loading = false;

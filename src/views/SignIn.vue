@@ -1,15 +1,22 @@
 <template>
   <div class="signin">
-    <form id="signin-form" v-on:submit.prevent>
-      <div id="title">
-        <p>SIGN IN</p>
-      </div>
-      <br/>
+    <div class="box container" style="max-width:500px;">
+      <h1 class="title">SIGN IN</h1>
       <p :class="{ red : hasError }">{{ msg }}</p>
-      <input class="inpt" type="text" placeholder="ユーザー名" v-model="id">
-      <input class="inpt" type="password" placeholder="パスワード" v-model="pw">
-      <button class="btn" @click="signin">サインイン</button>
-    </form>
+      <div class="field">
+        <label class="label">ユーザー名</label>
+        <div class="control">
+          <input class="input" type="text" v-model="id">
+        </div>
+      </div>
+      <div class="field">
+        <label class="label">パスワード</label>
+        <div class="control">
+          <input class="input" type="password" v-model="pw">
+        </div>
+      </div>
+      <button class="button is-info" @click="signin">サインイン</button>
+    </div>
   </div>
 </template>
 
@@ -50,62 +57,6 @@ export default {
 </script>
 
 <style lang="stylus" scoped>
-blue = #2196F3
-  *
-    margin 0
-    padding 0
-    border 0
-    outline none
-
-  .signin
-    position absolute
-    top 0
-    left 0
-    right 0
-    bottom 0
-    margin 15% auto
-
-  #signin-form
-    width 300px
-    height 200px
-    margin auto
-    border-radius 6px
-    box-shadow 0 0 15px rgba(0,0,0,.3)
-
-  #title
-    background-color blue
-    border-radius 6px 6px 0 0
-    height: 30px
-    line-height 30px
-    text-align center
-    color #FFF
-    letter-spacing 1px
-
-  .inpt
-    display block
-    margin 0 auto
-    margin-top 10px
-    height 25px;
-    line-height 25px;
-    width 65%
-    padding-left 10px
-    border :1px solid #CCC
-    border-radius 3px
-
-  .btn
-    display inline-block
-    color #FFF
-    height 35px
-    width 80px
-    border-radius 3px
-    box-shadow 0 0 2px 1px rgba(0,0,0,.3)
-    margin 10px auto
-    background-color blue/*背景色*/
-    cursor pointer
-  &:active
-    box-shadow none
-  
-  .red
-    color #ff0000
-    font-weight bold
+.red
+  color : #F00
 </style>

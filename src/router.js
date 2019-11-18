@@ -6,12 +6,12 @@ import SignIn from './views/SignIn.vue'
 import EditLog from './views/EditLog.vue'
 import UserList from './views/UserList.vue'
 import Links from './views/Links.vue'
-import Test from './components/test.vue'
+import User from './views/User.vue'
 
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  //mode: 'history', If this mode is on, the page cannot be displayed on production env.
   base: process.env.BASE_URL,
   routes: [
     {
@@ -40,9 +40,9 @@ export default new Router({
       component: Links
     },
     {
-      path: '/test',
-      name: 'test',
-      component: Test
+      path: '/user/:id',
+      name: 'user',
+      component: User
     }
   ]
 })
