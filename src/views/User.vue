@@ -85,7 +85,26 @@
       <div class="buttons">
         <button class="button is-link" @click="update_db()">更新 -UPDATE-</button>
         <button class="button is-info" @click="back2list">戻る -CANCEL-</button>
-        <button class="button is-danger" @click="back2list">削除 -DELETE-</button>
+        <button class="button is-danger" @click="modal = true">削除 -DELETE-</button>
+      </div>
+    </div>
+    <!-- delete confirm modal window -->
+    <div class="modal" :class="{ 'is-active' : modal }">
+      <div class="modal-background"></div>
+      <div class="modal-content">
+        <article class="message is-medium">
+          <div class="message-header">
+            <p>本当に削除しますか？</p>
+          </div>
+          <div class="message-body">
+            <p>削除する場合は<strong>OK</strong>を、キャンセルする場合は<strong>CANCEL</strong>を押してください。</p>
+            <br>
+            <div class="buttons container">
+              <button class="button is-danger">OK</button>
+              <button class="button is-danger is-light" @click="modal = false">Cancel</button>
+          </div>
+          </div>
+        </article>
       </div>
     </div>
 
@@ -106,7 +125,8 @@ export default {
       uccx_id : '',
       department : '',
       remarks : '',
-      created_at : ''
+      created_at : '',
+      modal: false
     }
   },
   methods:{
@@ -143,7 +163,7 @@ export default {
         .catch()
     },
     deleteDB(){
-      
+
     },
     getToday(){
       let today = new Date();
