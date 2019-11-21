@@ -23,8 +23,8 @@ export default {
   data : function(){
     return {
       mnus : [
-          {id:1, mnu: 'TOP', link: '/'},
-          {id:2, mnu: 'Users', link: '/userlist'},
+          {id:1, mnu: 'TOP', link: '/userlist'},
+          {id:2, mnu: 'User Create', link: '/create-user'},
           {id:3, mnu: 'Logs', link: '/editlog'},
           {id:4, mnu: 'Links', link: '/links'}
         ]

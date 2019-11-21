@@ -1,5 +1,5 @@
 <template>
-  <div class="links">
+  <div class="links section">
     <h1>this is links.</h1>
   </div>
 </template>

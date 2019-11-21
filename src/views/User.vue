@@ -9,78 +9,105 @@
           <h2 class="subtitle">
             編集中のID: {{ $route.params.id }}
           </h2>
-          <h2 class="subtitle"> Created at : {{ created_at }}</h2>
+          <h2 class="subtitle"> Created at : {{ user.created_at }}</h2>
         </div>
       </div>
     </section>
 
     <div class="container section">
 
-      <div class="level">
-        <div class="level-item">
+      <div class="columns">
+        <div class="column">
           <div class="field">
             <label class="label">氏名 (ローマ字)</label>
             <div class="control">
-              <input class="input" type="text" placeholder="ex: Hanako Yamada" v-model="name">
+              <input class="input" type="text" placeholder="ex: Hanako Yamada" v-model="user.name">
             </div>
             <p class="help">Name</p>
           </div>
         </div>
 
-        <div class="level-item">
+        <div class="column">
           <div class="field">
             <label class="label">ユーザーID</label>
             <div class="control">
-              <input class="input" type="text" placeholder="ex: hyamada" v-model="windows_id">
+              <input class="input" type="text" placeholder="ex: hyamada" v-model="user.windows_id">
             </div>
             <p class="help">User ID</p>
           </div>
         </div>
       </div>
       
-      <div class="level">
-        <div class="level-item">
+      <div class="columns">
+        <div class="column">
           <div class="field">
             <label class="label">オペレーターID</label>
             <div class="control">
-              <input class="input" type="text" placeholder="ex: hy" v-model="operator_id">
+              <input class="input" type="text" placeholder="ex: hy" v-model="user.operator_id">
             </div>
             <p class="help">Operator ID</p>  
           </div>
         </div>
 
-        <div class="level-item">
+        <div class="column">
           <div class="field">
             <label class="label">UCCX ID</label>
             <div class="control">
-              <input class="input" type="text" placeholder="ex: 887XXXX" v-model="uccx_id">
+              <input class="input" type="text" placeholder="ex: 887XXXX" v-model="user.uccx_id">
             </div>
             <p class="help">UCCX ID</p>  
           </div>
         </div>
       </div>
 
-      <div class="level">
-        <div class="level-item">
+      <div class="columns">
+        <div class="column">
+          <div class="field">
+            <label class="label">ROLE</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="ex: Role_299138" v-model="user.role">
+            </div>
+            <p class="help">Role</p> 
+          </div>
+        </div>
+      
+        <div class="column">
+          <div class="field">
+            <label class="label">役職</label>
+            <div class="control">
+              <input class="input" type="text" placeholder="" v-model="user.job_title">
+            </div>
+            <p class="help">Job Title</p>  
+          </div>
+        </div>
+      </div>
+
+      <div class="columns">
+        <div class="column">
           <div class="field">
             <label class="label">所属</label>
             <div class="control">
-              <input class="input" type="text" placeholder="ex: Customer Sales - CSR" v-model="department">
+              <input class="input" type="text" placeholder="ex: Customer Sales - CSR" v-model="user.department">
             </div>
             <p class="help">Department</p> 
           </div>
         </div>
       
-        <div class="level-item">
+        <div class="column">
           <div class="field">
             <label class="label">備考</label>
             <div class="control">
-              <input class="input" type="text" placeholder="Text input" v-model="remarks">
+              <input class="input" type="text" placeholder="Text input" v-model="user.remarks">
             </div>
             <p class="help">Remarks</p>  
           </div>
         </div>
       </div>
+
+      <transition name="fade">
+        <p v-if="done" class="has-text-centered" style="color:red">{{ msg }}</p>
+      </transition>
+      <br>
       <!--button-->
       <div class="buttons">
         <button class="button is-link" @click="update_db()">更新 -UPDATE-</button>
@@ -97,10 +124,10 @@
             <p>本当に削除しますか？</p>
           </div>
           <div class="message-body">
-            <p>削除する場合は<strong>OK</strong>を、キャンセルする場合は<strong>CANCEL</strong>を押してください。</p>
+            <p>削除する場合は<strong>OK</strong>を、削除せず戻る場合は<strong>CANCEL</strong>を押してください。</p>
             <br>
             <div class="buttons container">
-              <button class="button is-danger">OK</button>
+              <button class="button is-danger" @click="deleteDB()">OK</button>
               <button class="button is-danger is-light" @click="modal = false">Cancel</button>
           </div>
           </div>
@@ -119,14 +146,20 @@ export default {
   name: 'user',
   data(){
     return {
-      name : '',
-      windows_id : '',
-      operator_id : '',
-      uccx_id : '',
-      department : '',
-      remarks : '',
-      created_at : '',
-      modal: false
+      user : {
+        name : '',
+        windows_id : '',
+        operator_id : '',
+        uccx_id : '',
+        department : '',
+        role : '',
+        job_title : '',
+        remarks : '',
+        created_at : ''
+      },
+      modal: false,
+      done : false,
+      msg:''
     }
   },
   methods:{
@@ -134,35 +167,51 @@ export default {
       this.$router.push("/userlist")
     },
     update_db(){
+      //create SQL statement
       let sql = "";
-      sql += "name='"+this.name+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " windows_id='"+this.windows_id+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " operator_id='"+this.operator_id+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " uccx_id='"+this.uccx_id+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " department='"+this.department+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " remarks='"+this.remarks+"'" || "\"\"";
-      sql = sql + ",";
-      sql += " updated_at='"+this.getToday()+"'" || "\"\"";
-      let id = this.$route.params.id;
 
+      delete this.user.id
+      this.user.created_at = this.getToday();
+
+      for(let key in this.user){
+        if(sql != ""){
+          sql += ","+key + "='"+this.user[key]+"'";
+        }else{
+          sql += key + "='"+this.user[key]+"'";
+        }
+      }
+
+      let id = this.$route.params.id;
+      console.log(sql)
       axios
         .get("http://lejnet/ISNet/UMT/db.asp", {
           params:{
-            req : "write",
+            req : "update",
             qry : "UPDATE master SET "+sql+" WHERE id="+id
           }
         })
         .then(response => {
-          console.log(response)
+          console.log(response);
+          this.dispMsg("更新完了しました");
         })
         .catch()
     },
     deleteDB(){
+      let id = this.$route.params.id;
+      axios
+        .get("http://lejnet/ISNet/UMT/db.asp",{
+          params:{
+            req:'delete',
+            qry: id,
+            opr: this.operator_id
+          }
+        })
+        .then(response => {
+          this.dispMsg("削除しました")
+          console.log(response.data)
+          this.$router.push("/userlist")
+        })
+        .catch()
 
     },
     getToday(){
@@ -171,6 +220,10 @@ export default {
       let month = today.getMonth()+1;
       let day = today.getDate();
       return year +"/"+month+"/"+day;
+    },
+    dispMsg(msg){
+      this.msg = msg
+      this.done = true;
     }
   },
   created: function(){
@@ -186,16 +239,13 @@ export default {
         }
       )
       .then(response => {
-          //console.log(response);
+
           let userInfo = response.data.body[0];
 
-          this.name = userInfo.name;
-          this.windows_id = userInfo.windows_id;
-          this.operator_id = userInfo.operator_id;
-          this.uccx_id = userInfo.uccx_id;
-          this.department = userInfo.department;
-          this.remarks = userInfo.remarks;
-          this.created_at = userInfo.created_at;
+          for(var key in this.user){
+            this.user[key] = userInfo[key]
+          }
+
         })
       .catch(
         // eslint-disable-next-line
@@ -211,4 +261,10 @@ export default {
   .buttons
     button
       margin 0 auto
+  
+  .fade-enter-active, .fade-leave-active
+    transition: opacity .5s;
+
+  .fade-enter, .fade-leave-to
+    opacity: 0;
 </style>

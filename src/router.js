@@ -1,12 +1,12 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 //Import Components
-import Home from './views/Home.vue'
 import SignIn from './views/SignIn.vue'
 import EditLog from './views/EditLog.vue'
 import UserList from './views/UserList.vue'
 import Links from './views/Links.vue'
 import User from './views/User.vue'
+import CreateUser from './views/CreateUser.vue'
 
 Vue.use(Router)
 
@@ -17,7 +17,7 @@ export default new Router({
     {
       path: '/',
       name: 'home',
-      component: Home
+      component: UserList
     },
     {
       path:'/signin',
@@ -43,6 +43,11 @@ export default new Router({
       path: '/user/:id',
       name: 'user',
       component: User
+    },
+    {
+      path: '/create-user',
+      name: 'create-user',
+      component: CreateUser
     }
   ]
 })

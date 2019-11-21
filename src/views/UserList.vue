@@ -1,12 +1,12 @@
 <template>
-  <div class="userlist container">
+  <div class="userlist container section">
     <section v-if="loading">
-      <br/>
-      <p>Loading...</p>
       <loader></loader>
     </section>
     <section v-else>
+      <!--SEARCH FIELD-->
       <input class="input" type="text" v-model="srchWrd" placeholder="検索語句を入力">
+      <!--USER LIST-->
       <div class="table-container" style="margin: 20px 0">
         <table class="table is-bordered is-hoverable">
           <thead>
@@ -63,7 +63,7 @@ export default {
   methods: {
     sorting(hdr){
       this.res_bdy.sort(function(a, b){
-        return a[hdr] > b[hdr] ? 1 : -1;
+        return a[hdr] < b[hdr] ? 1 : -1;
       })
     },
     editUser(id){
@@ -76,7 +76,7 @@ export default {
           params:{req:'read'}
         })
       .then(response => {
-        console.log(response.data);
+        console.log(response);
           this.res_hdr = response.data.header;
           this.res_bdy = response.data.body;
           this.loading = false;
@@ -89,7 +89,7 @@ export default {
 }
 </script>
 
-<style lang="sass">
+<style lang="sass" scoped>
   .table
     cursor: pointer
 </style>

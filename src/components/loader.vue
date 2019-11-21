@@ -1,5 +1,6 @@
 <template>
   <div class="spinner">
+    <h1 class="is-size-1">LOADING...</h1>
     <span class="rect1"></span>
     <span class="rect2"></span>
     <span class="rect3"></span>
@@ -10,7 +11,7 @@
 
 <script>
 export default {
-  name: 'MyHeader',
+  name: 'loader',
   props: {
     title: String
   }
@@ -21,6 +22,7 @@ export default {
 <style scoped>
 .spinner {
   margin: 0 auto;
+  margin-top: 30px;
   width: auto;
   height: 40px;
   text-align: center;
